@@ -1,22 +1,39 @@
 # Uses python3
-import sys
+def sum(n):
+    def fibonacci_sum_naive(n):
+        if n <= 1:
+            return n
 
-def fibonacci_partial_sum_naive(from_, to):
-    sum = 0
+        previous = 0
+        current  = 1
+        sum      = 1
 
-    current = 0
-    next  = 1
-
-    for i in range(to + 1):
-        if i >= from_:
+        for _ in range(n - 1):
+            previous, current = current, previous + current
             sum += current
 
-        current, next = next, current + next
+        return sum % 10
 
-    return sum % 10
+
+    def find_redun(n):
+        if n == 0:
+            return n
+        for i in range(1000*n):
+            if i > 0:
+                if fibonacci_sum_naive(i) == 0 and fibonacci_sum_naive(i+1) == 1:
+                    return i
+
+    if n == 0:
+        return 0
+    else:
+        return fibonacci_sum_naive(n) % find_redun(n)
 
 
 if __name__ == '__main__':
-    input = sys.stdin.read();
-    from_, to = map(int, input.split())
-    print(fibonacci_partial_sum_naive(from_, to))
+    from_, to = map(int, input().split())
+    num1 = sum(to)
+    num2 = sum(from_ - 1)
+    if num2 > num1:
+        num1 += 10
+
+    print((num1-num2)%10)

@@ -1,20 +1,20 @@
 # Uses python3
-from sys import stdin
 
-def fibonacci_sum_squares_naive(n):
-    if n <= 1:
-        return n
+def answer(n):
+    def get_fibonacci_last_digit_naive(n):
+        if n <= 1:
+            return n
+        previous = 0
+        current = 1
+        for _ in range(n - 1):
+            previous, current = current, previous + current
+        return current % 10
 
-    previous = 0
-    current  = 1
-    sum      = 1
 
-    for _ in range(n - 1):
-        previous, current = current, previous + current
-        sum += current * current
+    n %= 60
+    return get_fibonacci_last_digit_naive(n)
 
-    return sum % 10
 
 if __name__ == '__main__':
-    n = int(stdin.read())
-    print(fibonacci_sum_squares_naive(n))
+    n = int(input())
+    print((answer(n)*answer(n+1)) % 10)
