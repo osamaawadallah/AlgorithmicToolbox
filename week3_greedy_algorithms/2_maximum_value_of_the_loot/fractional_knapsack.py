@@ -1,17 +1,24 @@
 # Uses python3
-import sys
+from random import randint
 
-def get_optimal_value(capacity, weights, values):
-    value = 0.
-    # write your code here
 
-    return value
+def get_optimal_value(capacity, values):
+    tValue = 0.
+    for w, v in sorted(values.items(), key=lambda x: x[1], reverse=True):
+        if capacity <= 0:
+            return tValue
+        curWeight = min(capacity, w)
+        tValue += curWeight * v
+        capacity -= curWeight
+
+    return tValue
 
 
 if __name__ == "__main__":
-    data = list(map(int, sys.stdin.read().split()))
-    n, capacity = data[0:2]
-    values = data[2:(2 * n + 2):2]
-    weights = data[3:(2 * n + 2):2]
-    opt_value = get_optimal_value(capacity, weights, values)
+    n, capacity = map(int, input().split())
+    value={}
+    for i in range(n):
+        v, w = map(int, input().split())
+        value[w] = v/w
+    opt_value = get_optimal_value(capacity, value)
     print("{:.10f}".format(opt_value))
